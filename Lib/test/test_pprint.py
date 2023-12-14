@@ -395,6 +395,75 @@ class QueryTestCase(unittest.TestCase):
         self.assertEqual(pprint.pformat({"xy\tab\n": (3,), 5: [[]], (): {}}),
             r"{5: [[]], 'xy\tab\n': (3,), (): {}}")
 
+    def test_dict_force_newline(self):
+        d = {
+                'a': 2,
+                'b': {
+                    'b1': 3,
+                    'b2': {
+                        'b21': 4,
+                        'b22': 5,
+                        'b23': 6,
+                        'b24': {
+                            'b241': 4,
+                            'b242': 5,
+                            'b243': 6
+                        }
+                    }
+                },
+                'c': {
+                    'c1': 4,
+                    'c2': 5,
+                    'c3': 6
+                }
+            }
+        self.assertEqual(pprint.pformat(d, indent=4, force_newline=True), """\
+{
+    'a': 2,
+    'b': {
+        'b1': 3,
+        'b2': {
+            'b21': 4,
+            'b22': 5,
+            'b23': 6,
+            'b24': {
+                'b241': 4,
+                'b242': 5,
+                'b243': 6
+            }
+        }
+    },
+    'c': {
+        'c1': 4,
+        'c2': 5,
+        'c3': 6
+    }
+}""")
+
+        self.assertEqual(pprint.pformat(d, indent=2, force_newline=True), """\
+{
+  'a': 2,
+  'b': {
+    'b1': 3,
+    'b2': {
+      'b21': 4,
+      'b22': 5,
+      'b23': 6,
+      'b24': {
+        'b241': 4,
+        'b242': 5,
+        'b243': 6
+      }
+    }
+  },
+  'c': {
+    'c1': 4,
+    'c2': 5,
+    'c3': 6
+  }
+}""")
+
+
     def test_sort_dict(self):
         d = dict.fromkeys('cba')
         self.assertEqual(pprint.pformat(d, sort_dicts=False), "{'c': None, 'b': None, 'a': None}")
