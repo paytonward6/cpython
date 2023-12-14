@@ -400,11 +400,9 @@ class PrettyPrinter:
         for i, (key, ent) in enumerate(items):
             last = i == last_index
             rep = self._repr(key, context, level)
-            write(f'{rep}: ')
-
-            next_indent = indent + len(rep) + 2
-
-            self._format(ent, stream, next_indent,
+            write(rep)
+            write(': ')
+            self._format(ent, stream, indent + len(rep) + 2,
                          allowance if last else 1,
                          context, level)
             if not last:
